@@ -1,11 +1,15 @@
 import "@radix-ui/themes/styles.css";
+import "./theme-config.css";
 import "./globals.css"; // or wherever your global styles are
 import { Inter } from "next/font/google";
 import { Theme } from "@radix-ui/themes";
 import NavBar from "./NavBar";
 
 // ✅ Initialize the font
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 export const metadata = {
   title: "My App",
@@ -19,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.variable}>
         <Theme>
           <NavBar />
           <main className="p-5">{children}</main>
