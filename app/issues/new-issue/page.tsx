@@ -11,6 +11,8 @@ import { createIssueSchema } from "@/app/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
+import Spinner from "@/app/components/Spinner";
+import { time } from "console";
 
 // 👇 dynamically import SimpleMDE
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
@@ -30,6 +32,7 @@ const NewIssue = () => {
     resolver: zodResolver(createIssueSchema),
   });
   const [error, setError] = useState("");
+  const [isSubmitting, setSubmitting] = useState(false);
 
   return (
     <div className="max-w-xl ">
@@ -43,11 +46,16 @@ const NewIssue = () => {
         className="space-y-5"
         onSubmit={handleSubmit(async (data) => {
           console.log(data);
+          setSubmitting(true);
           try {
-            await axios.post("/api/issues", data);
+            // await axios.post("/api/issues", data);
+            await new Promise((resolve) => setTimeout(resolve, 5000));
+
             router.push("/issues");
           } catch (error) {
             setError("unexpected error occured");
+          } finally {
+            setSubmitting(false); // Always reset the submitting state
           }
         })}
       >
@@ -62,7 +70,10 @@ const NewIssue = () => {
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
-        <Button>Submit</Button>
+        <Button disabled={isSubmitting}>
+          Submit
+          {isSubmitting && <Spinner />}
+        </Button>
       </form>
     </div>
   );
