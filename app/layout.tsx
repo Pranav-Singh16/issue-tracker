@@ -2,7 +2,7 @@ import "@radix-ui/themes/styles.css";
 import "./theme-config.css";
 import "./globals.css"; // or wherever your global styles are
 import { Inter } from "next/font/google";
-import { Theme } from "@radix-ui/themes";
+import { Theme, ThemePanel } from "@radix-ui/themes";
 import NavBar from "./NavBar";
 
 // ✅ Initialize the font
