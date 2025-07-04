@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import delay from "delay";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import IssueStatusBatch from "@/app/components/IssueStatusBatch";
+import Markdown from "react-markdown";
 
 interface props {
   params: { id: string };
@@ -27,8 +28,8 @@ const IssueDetailPage = async ({ params }: props) => {
         <IssueStatusBatch status={issue.status} />
         <Text>{issue.createdAt.toDateString()}</Text>
       </Flex>
-      <Card>
-        <p>{issue.description}</p>
+      <Card className="prose">
+        <Markdown>{issue.description}</Markdown>
       </Card>
       <p>{issue.updatedAt.toDateString()}</p>
     </div>
