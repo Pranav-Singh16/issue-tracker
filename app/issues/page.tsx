@@ -10,7 +10,7 @@ const IssuesPage = async () => {
   await delay(5000);
 
   const issues = await prisma.issue.findMany();
-  console.log(issues);
+  // console.log(issues);
   return (
     <div>
       <IssueActions />
@@ -31,7 +31,7 @@ const IssuesPage = async () => {
             {issues.map((issue) => (
               <Table.Row key={issue.id}>
                 <Table.Cell>
-                  {issue.title}
+                  <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
                   <div className="block md:hidden">
                     <IssueStatusBatch status={issue.status} />
                   </div>

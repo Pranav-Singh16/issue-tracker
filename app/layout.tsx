@@ -12,8 +12,17 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "My App",
-  description: "A Next.js app",
+  title: "Issue Tracker",
+  description:
+    "An issue tracker app where you can create, monitor, resolve, and close issues.",
+  icons: {
+    icon: [
+      {
+        url: "/metabug.svg",
+        type: "image/svg+xml",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

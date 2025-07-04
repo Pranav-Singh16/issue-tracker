@@ -12,7 +12,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Spinner from "@/app/components/Spinner";
-import delay from "delay";
 
 // 👇 dynamically import SimpleMDE
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
@@ -21,8 +20,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
-const NewIssue = async () => {
-  await delay(5000);
+const NewIssue = () => {
   const router = useRouter();
   const {
     register,
