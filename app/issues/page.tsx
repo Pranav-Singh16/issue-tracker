@@ -1,5 +1,5 @@
 import { Button } from "@radix-ui/themes";
-import Link from "next/link";
+import Link from "../components/link";
 import { prisma } from "@/prisma/client";
 import { Table } from "@radix-ui/themes";
 import IssueStatusBatch from "../components/IssueStatusBatch";
