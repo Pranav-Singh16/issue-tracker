@@ -10,8 +10,7 @@ import { useState } from "react";
 import { createIssueSchema } from "@/app/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import ErrorMessage from "@/app/components/ErrorMessage";
-import Spinner from "@/app/components/Spinner";
+import { ErrorMessage, Spinner } from "@/app/components/index";
 
 // 👇 dynamically import SimpleMDE
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {

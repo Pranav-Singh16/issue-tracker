@@ -1,6 +1,4 @@
-import Spinner from "@/app/components/Spinner";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { Skeleton } from "@/app/components/index";
 
 const IssueLoading = () => {
   return (
