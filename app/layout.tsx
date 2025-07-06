@@ -2,7 +2,7 @@ import "@radix-ui/themes/styles.css";
 import "./theme-config.css";
 import "./globals.css"; // or wherever your global styles are
 import { Inter } from "next/font/google";
-import { Theme, ThemePanel } from "@radix-ui/themes";
+import { Container, Theme, ThemePanel } from "@radix-ui/themes";
 import NavBar from "./NavBar";
 
 // ✅ Initialize the font
@@ -35,7 +35,9 @@ export default function RootLayout({
       <body className={inter.variable}>
         <Theme>
           <NavBar />
-          <main className="p-5">{children}</main>
+          <main className="p-5">
+            <Container>{children}</Container>
+          </main>
         </Theme>
       </body>
     </html>
