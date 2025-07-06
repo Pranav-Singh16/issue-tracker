@@ -2,7 +2,7 @@
 "use client";
 
 import { Button, Callout, Text, TextField } from "@radix-ui/themes";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
@@ -15,7 +15,7 @@ import { ErrorMessage, Spinner } from "@/app/components/index";
 import { Issue } from "@prisma/client";
 
 // Dynamically import SimpleMDE for client-side rendering
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+const SimpleMDE = dynamicImport(() => import("react-simplemde-editor"), {
   ssr: false, // This ensures the component is only rendered on the client side
 });
 
