@@ -4,6 +4,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { Bug } from "@/app/icons/index";
+import { useSession } from "next-auth/react";
+import { Box } from "@radix-ui/themes";
 
 const NavBar = () => {
   const currentPath = usePathname();
@@ -11,25 +13,39 @@ const NavBar = () => {
     { label: "Dashboard", href: "/" },
     { label: "Issues", href: "/issues" },
   ];
+  const { status, data: session } = useSession();
   return (
     <nav className="flex space-x-5 border-b mb-5 px-5 h-15 items-center">
       {/* <Image src="/Bug.svg" alt="Logo" width={25} height={25} /> */}
       <Bug />
       <ul className="flex space-x-5">
         {links.map((link) => (
-          <Link
-            key={link.label}
-            className={classNames({
-              "text-zinc-900": link.href === currentPath,
-              "text-zinc-500": link.href !== currentPath,
-              "hover:text-zinc-800 transition-colors": true,
-            })}
-            href={link.href}
-          >
-            {link.label}
-          </Link>
+          <li key={link.label}>
+            <Link
+              className={classNames({
+                "text-zinc-900": link.href === currentPath,
+                "text-zinc-500": link.href !== currentPath,
+                "hover:text-zinc-800 transition-colors": true,
+              })}
+              href={link.href}
+            >
+              {link.label}
+            </Link>
+          </li>
         ))}
       </ul>
+      <Box>
+        {status === "unauthenticated" && (
+          <Link href="/api/auth/signin" className="text-zinc-500">
+            Login
+          </Link>
+        )}
+        {status === "authenticated" && (
+          <Link href="/api/auth/signout" className="text-zinc-500">
+            Log out
+          </Link>
+        )}
+      </Box>
     </nav>
   );
 };
