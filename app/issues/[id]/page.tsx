@@ -4,12 +4,16 @@ import { notFound } from "next/navigation";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
 import DeleteIssueButton from "./DeleteIssueButton";
+import authOptions from "@/app/auth/authOptions";
+import { getServerSession } from "next-auth";
 
 interface Props {
   params: Promise<{ id: string }>;
 }
 
 const IssueDetailPage = async ({ params }: Props) => {
+  const session = await getServerSession(authOptions);
+
   const { id: id } = await params;
   const issueId = parseInt(id, 10);
   if (isNaN(issueId)) return notFound();
@@ -28,14 +32,16 @@ const IssueDetailPage = async ({ params }: Props) => {
         <IssueDetails issue={issue} />
       </Box>
 
-      <Flex direction="column" gap="2" className="w-full">
-        <Box className="w-full">
-          <EditIssueButton issueId={issueId} />
-        </Box>
-        <Box className="w-full">
-          <DeleteIssueButton issueId={issueId} />
-        </Box>
-      </Flex>
+      {session && (
+        <Flex direction="column" gap="2" className="w-full">
+          <Box className="w-full">
+            <EditIssueButton issueId={issueId} />
+          </Box>
+          <Box className="w-full">
+            <DeleteIssueButton issueId={issueId} />
+          </Box>
+        </Flex>
+      )}
     </Grid>
   );
 };
