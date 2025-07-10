@@ -1,0 +1,16 @@
+import { Select } from "@radix-ui/themes";
+
+const AssigneeSelect = () => {
+  return (
+    <Select.Root>
+      <Select.Trigger placeholder="Assign..." style={{ width: "100%" }} />
+      <Select.Content>
+        <Select.Group>
+          <Select.Label>Suggestions</Select.Label>
+          <Select.Item value="1">Pranv Singh</Select.Item>
+        </Select.Group>
+      </Select.Content>
+    </Select.Root>
+  );
+};
+export default AssigneeSelect;
