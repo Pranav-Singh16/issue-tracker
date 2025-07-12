@@ -19,6 +19,8 @@ const SimpleMDE = dynamicImport(() => import("react-simplemde-editor"), {
   ssr: false, // This ensures the component is only rendered on the client side
 });
 
+// import SimpleMDE from "react-simplemde-editor";
+
 type IssueFormData = z.infer<typeof issueSchema>;
 
 const IssueForm = ({ issue }: { issue?: Issue }) => {

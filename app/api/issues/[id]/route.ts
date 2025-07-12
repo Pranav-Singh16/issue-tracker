@@ -4,6 +4,29 @@ import { prisma } from "@/prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
+// app/api/issues/[id]/route.ts
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
+  const issueId = parseInt(id, 10);
+
+  if (isNaN(issueId)) {
+    return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+  }
+
+  const issue = await prisma.issue.findUnique({
+    where: { id: issueId },
+  });
+
+  if (!issue) {
+    return NextResponse.json({ error: "Issue not found" }, { status: 404 });
+  }
+
+  return NextResponse.json(issue);
+}
+
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
