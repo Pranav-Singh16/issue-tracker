@@ -4,10 +4,10 @@ import { Flex, Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { User } from "next-auth";
-import { useEffect, useState } from "react";
 import { Skeleton } from "@/app/components";
+import { Issue } from "@prisma/client";
 
-const AssigneeSelect = () => {
+const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const {
     data: users,
     error,
@@ -23,30 +23,29 @@ const AssigneeSelect = () => {
   if (isLoading) return <Skeleton height="2rem" />;
 
   return (
-    <Select.Root>
+    <Select.Root
+      defaultValue={issue.assignedtoUserId ?? "unassigned"}
+      onValueChange={(userId) => {
+        axios.patch("/api/issues/" + issue.id, {
+          assignedtoUserId: userId === "unassigned" ? null : userId,
+        });
+      }}
+    >
       <Select.Trigger placeholder="Assign..." style={{ width: "100%" }} />
       <Select.Content>
         <Select.Group>
           <Select.Label>Suggestions</Select.Label>
-
+          <Select.Item value="unassigned">Unassigned</Select.Item>
           {users?.map((user) => (
             <Select.Item key={user.id} value={user.id}>
-              <Flex
-                style={{
-                  display: "flex",
-                  flexDirection: "row", // Align children in a row
-                  alignItems: "center", // Vertically center the content
-                  gap: "8px", // Optional: Add space between image and name
-                }}
-              >
+              <Flex align="center" gap="2">
                 <img
-                  src={String(user.image)} // Ensure `user.image` is treated as a string URL
-                  alt={String(user.name)} // Ensure `user.name` is treated as a string
+                  src={String(user.image)}
+                  alt={String(user.name)}
                   style={{ width: 24, height: 24, borderRadius: "50%" }}
                 />
-                <span>{user.name}</span> {/* Display name next to image */}
+                <span>{user.name}</span>
               </Flex>
-              {/* {user.name} */}
             </Select.Item>
           ))}
         </Select.Group>
