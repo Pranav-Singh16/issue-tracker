@@ -10,11 +10,11 @@ const issueBatchMap: Record<
   OPEN: { label: "Open", color: "red" },
 };
 
-const IssueStatusBatch = ({ status }: { status: Status }) => {
+const IssueStatusBadge = ({ status }: { status: Status }) => {
   return (
     <Badge color={issueBatchMap[status].color}>
       {issueBatchMap[status].label}
     </Badge>
   );
 };
-export default IssueStatusBatch;
+export default IssueStatusBadge;
