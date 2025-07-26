@@ -8,23 +8,31 @@ import authOptions from "@/app/auth/authOptions";
 import { getServerSession } from "next-auth";
 import AssigneeSelect from "./AssigneeSelect";
 import { Metadata } from "next";
+import { cache } from "react";
+
+// Use the `cache` function to memoize the query result.
+const fetchIssue = cache(async (issueId: number) => {
+  return await prisma.issue.findUnique({
+    where: { id: issueId },
+  });
+});
 
 interface Props {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 const IssueDetailPage = async ({ params }: Props) => {
   const session = await getServerSession(authOptions);
 
-  const { id: id } = await params;
-  const issueId = parseInt(id, 10);
+  // Get the issue ID from the URL params.
+  const issueId = parseInt(params.id, 10);
   if (isNaN(issueId)) return notFound();
 
-  const issue = await prisma.issue.findUnique({
-    where: { id: issueId },
-  });
+  // Fetch the issue using the cached function.
+  const issue = await fetchIssue(issueId);
 
   if (!issue) return notFound();
+
   return (
     <Grid
       columns={{ initial: "1", sm: "5" }}
@@ -51,12 +59,18 @@ const IssueDetailPage = async ({ params }: Props) => {
   );
 };
 
+// Metadata generation using the cached issue data
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params; // Await the params to get the id
-  const issueId = parseInt(id, 10);
-  const issue = await prisma.issue.findUnique({
-    where: { id: issueId },
-  });
+  const issueId = parseInt(params.id, 10);
+  if (isNaN(issueId)) {
+    return {
+      title: "Issue not found",
+      description: "The issue you are looking for does not exist.",
+    };
+  }
+
+  // Fetch the issue using the cached function.
+  const issue = await fetchIssue(issueId);
 
   if (!issue) {
     return {
