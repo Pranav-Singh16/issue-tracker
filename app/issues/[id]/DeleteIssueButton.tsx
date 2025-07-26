@@ -1,3 +1,4 @@
+// app/issues/[id]/DeleteIssueButton.tsx
 "use client";
 
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
@@ -17,8 +18,10 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
       await axios.delete(`/api/issues/${issueId}`);
       router.push("/issues");
       router.refresh();
-    } catch (error) {
+    } catch (err) {
+      // Renamed 'error' to 'err' to resolve the ESLint warning
       setError(true);
+      console.error("Error deleting issue:", err); // Added console.error to use 'err'
     } finally {
       setIsDeleting(false);
     }

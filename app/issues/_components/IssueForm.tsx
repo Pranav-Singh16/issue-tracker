@@ -1,7 +1,9 @@
+// app/issues/_components/IssueForm.tsx
+
 // Add "use client" at the top to mark this as a Client Component
 "use client";
 
-import { Button, Callout, Text, TextField } from "@radix-ui/themes";
+import { Button, Callout, TextField } from "@radix-ui/themes"; // Removed 'Text' as it was unused
 import dynamicImport from "next/dynamic";
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
@@ -18,8 +20,6 @@ import { Issue } from "@prisma/client";
 const SimpleMDE = dynamicImport(() => import("react-simplemde-editor"), {
   ssr: false, // This ensures the component is only rendered on the client side
 });
-
-// import SimpleMDE from "react-simplemde-editor";
 
 type IssueFormData = z.infer<typeof issueSchema>;
 
@@ -52,8 +52,10 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
       else await axios.post("/api/issues", data);
       router.push("/issues");
       router.refresh();
-    } catch (error) {
+    } catch (err) {
+      // Renamed 'error' to 'err' to resolve the ESLint warning
       setError("unexpected error occurred");
+      console.error("Submission error:", err); // Added console.error to use 'err'
     } finally {
       setSubmitting(false);
     }

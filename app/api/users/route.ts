@@ -1,7 +1,9 @@
+// app/api/users/route.ts
 import { prisma } from "@/prisma/client";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function GET(/* request: NextRequest */) {
+  // 'request' is unused, so it's commented out.
   try {
     const users = await prisma.user.findMany({ orderBy: { name: "asc" } });
     return NextResponse.json(users);

@@ -1,7 +1,8 @@
+// app/NavBar.tsx
 "use client";
 import { Skeleton } from "@/app/components";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image"; // Removed 'Image' import as it's not used
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { Bug } from "@/app/icons/index";

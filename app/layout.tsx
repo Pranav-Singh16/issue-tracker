@@ -1,8 +1,9 @@
+// app/layout.tsx
 import "@radix-ui/themes/styles.css";
 import "./theme-config.css";
 import "./globals.css"; // or wherever your global styles are
 import { Inter } from "next/font/google";
-import { Container, Theme, ThemePanel } from "@radix-ui/themes";
+import { Container, Theme } from "@radix-ui/themes"; // Removed 'ThemePanel' as it was unused
 import NavBar from "./NavBar";
 import AuthProvider from "./auth/provider";
 import QueryClientProvider from "@/QueryClientProvider";

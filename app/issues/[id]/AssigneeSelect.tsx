@@ -1,3 +1,4 @@
+// app/issues/[id]/AssigneeSelect.tsx
 "use client";
 
 import { Flex, Select } from "@radix-ui/themes";
@@ -7,6 +8,7 @@ import { User } from "next-auth";
 import { Skeleton } from "@/app/components";
 import { Issue } from "@prisma/client";
 import toast, { Toaster } from "react-hot-toast";
+import Image from "next/image"; // Import Image from next/image
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const { data: users, error, isLoading } = useUsers();
@@ -38,10 +40,13 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
             {users?.map((user) => (
               <Select.Item key={user.id} value={user.id}>
                 <Flex align="center" gap="2">
-                  <img
+                  {/* Replaced <img> with <Image /> for optimization */}
+                  <Image
                     src={String(user.image)}
                     alt={String(user.name)}
-                    style={{ width: 24, height: 24, borderRadius: "50%" }}
+                    width={24} // Specify width
+                    height={24} // Specify height
+                    style={{ borderRadius: "50%" }} // Apply border-radius via style prop
                   />
                   <span>{user.name}</span>
                 </Flex>
