@@ -11,6 +11,10 @@ const nextConfig = {
       },
     ];
   },
+  // Add the images configuration
+  images: {
+    domains: ["lh3.googleusercontent.com"], // Add this domain to allow images from Google
+  },
 };
 
 module.exports = nextConfig;
